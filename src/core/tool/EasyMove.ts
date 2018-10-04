@@ -28,6 +28,8 @@ class EasyMove {
 
     //移动速度
     public moveSpreed: number = 1;
+    //是否启动多指操作
+    public isUseMulti:boolean = false;
     //是否能旋转
     public canRotate: boolean = true;
     //是否能缩放
@@ -60,7 +62,7 @@ class EasyMove {
             this.listenObj.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
         }
         // 多指操作
-        this.mouseDown($e);
+        if(this.isUseMulti) this.mouseDown($e);
         //如果有回调则执行
         this.beginListen ? this.beginListen.apply(this.listenObj) : null;
     }
@@ -75,7 +77,7 @@ class EasyMove {
             this.listenObj.removeEventListener(egret.Event.ENTER_FRAME, this.update, this);
         }
         // 多指操作
-        this.mouseUp($e);
+        if(this.isUseMulti) this.mouseUp($e);
         //如果有回调则执行
         this.endListen ? this.endListen.apply(this.listenObj) : null;
     }
@@ -85,7 +87,7 @@ class EasyMove {
         this.direction = this.getDirction(this.beginPos, this.endPos);
         this.isMove = true;
         // 多指操作
-        this.mouseMove($e);
+        if(this.isUseMulti) this.mouseMove($e);
         //如果有回调则执行
         this.moveListen ? this.moveListen.apply(this.listenObj) : null;
     }
@@ -100,7 +102,7 @@ class EasyMove {
             this.moveObj.y += offsetY;
         }
         // 多指操作
-        this.mouseMove($e);
+        if(this.isUseMulti) this.mouseMove($e);
 
         //如果有回调则执行
         this.moveListen ? this.moveListen.apply(this.listenObj) : null;
